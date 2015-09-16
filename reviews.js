@@ -13,10 +13,10 @@ var db = {
 }
 
 var rabbit = jackrabbit(process.env.CLOUDAMQP_URL);
-var topicExchange = rabbit.topic();
+var exchange = rabbit.default();
 
-topicExchange
-  .queue({ exclusive: true, key: 'reviews.get' })
+exchange
+  .queue({ name: 'reviews.get' })
   .consume(onReviewsGet);
 
 function onReviewsGet(data, reply) {
